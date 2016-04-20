@@ -44,107 +44,11 @@
 /* 0 */
 /***/ function(module, exports, __webpack_require__) {
 
-	'use strict';
-
 	const angular = __webpack_require__(1);
 
-	const app = angular.module('ElementsApp', [])
-	// 
-	// .controller('ShowController', function() {
-	//   this.show = false;
-	//   this.click = function() {
-	//     console.log('SHOW CONTROLLER CLICK FUNCTION HAS BEEN HIT');
-	//     this.show = false;
-	//   }
-	// })
-
-	// .directive('customNav', function() {
-	//   return {
-	//     restrict: 'E',
-	//     scope: {
-	//
-	//     },
-	//     templateUrl: './templates/navbar.html',
-	//     controller: function() {
-	//       var vm = this
-	//       vm.active = 'home'
-	//       vm.setActive = function(tab) {
-	//         console.log('SetActive function has been called');
-	//         vm.active = tab;
-	//       }
-	//     },
-	//     controllerAs: 'navbarCtrl'
-	//   },
-	//   link: function($scope, element, attrs) {
-	//     element.on('click', function() {
-	//       element.css('border', 'solid')
-	//     })
-	//   }
-	// })
-
-
-	// CUSTOM NAVE ELEMENT
-	.directive('customNav', function() {
-	  return {
-	    restrict: 'E',
-	    templateUrl: './templates/navbar.html'
-	  }
-	})
-
-	// CUSTOM NAV ATTRIBUTE FUNCTIONALITY
-	.directive('myActiveLink', function($location) {
-	  return {
-	    restrict: 'A',
-	    scope: {
-	      path: '@myActiveLink'
-	    },
-	    link: function(scope, element, attributes) {
-	      scope.$on('$locationChangeSuccess', function() {
-	        if ($location.path() === scope.path) {
-	          element.addClass('active');
-	        } else {
-	          element.removeClass('active');
-	        }
-	      })
-	    }
-	  }
-	})
-
-	.directive('customHeader', function() {
-	  return {
-	    restrict: 'E',
-	    scope: {
-
-	    },
-	    templateUrl: './templates/header.html'
-	  };
-	})
-
-	// // SHOW ATTRIBUTE FOR CUSTOM HEADER
-	// .directive('showHeader', function() {
-	//   return {
-	//     restrict: 'A'
-	//   }
-	// })
-
-	.directive('modMessage', function() {
-	  return {
-	    restrict: 'E',
-	    scope: {
-	      name: '=',
-	      says: '=',
-	      points: '='
-	    },
-	    replace: true,
-	    transclude: true,
-	    templateUrl: './templates/messageMod.html',
-	    controller: function($scope) {
-	      $scope.addPoint = function() {
-	        $scope.points += 1
-	      }
-	    }
-	  }
-	})
+	__webpack_require__(3)
+	__webpack_require__(4)
+	__webpack_require__(5)
 
 
 /***/ },
@@ -31027,6 +30931,203 @@
 	})(window);
 
 	!window.angular.$$csp().noInlineStyle && window.angular.element(document.head).prepend('<style type="text/css">@charset "UTF-8";[ng\\:cloak],[ng-cloak],[data-ng-cloak],[x-ng-cloak],.ng-cloak,.x-ng-cloak,.ng-hide:not(.ng-hide-animate){display:none !important;}ng\\:form{display:block;}.ng-animate-shim{visibility:hidden;}.ng-anchor{position:absolute;}</style>');
+
+/***/ },
+/* 3 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	angular.module('CustomHeader', [])
+
+	.directive('customHeader', function() {
+	  return {
+	    restrict: 'AE',
+	    scope: {
+	      header: '='
+	    },
+	    templateUrl: '../../templates/header.html'
+	  };
+	})
+
+	.directive('modMessage', function() {
+	  return {
+	    restrict: 'E',
+	    scope: {
+	      name: '=',
+	      says: '=',
+	      points: '='
+	    },
+	    replace: true,
+	    transclude: true,
+	    templateUrl: './templates/messageMod.html',
+	    controller: function($scope) {
+	      $scope.addPoint = function() {
+	        $scope.points += 1
+	      }
+	    }
+	  }
+	})
+
+
+/***/ },
+/* 4 */
+/***/ function(module, exports) {
+
+	
+	angular.module('NavBar', [])
+
+	  .directive('myTabs', function() {
+	    return {
+	      restrict: 'E',
+	      transclude: true,
+	      scope: {},
+	      controller: ['$scope', function($scope) {
+	        var panes = $scope.panes = [];
+
+	        $scope.select = function(pane) {
+	          angular.forEach(panes, function(pane) {
+	            pane.selected = false;
+	          });
+	          pane.selected = true;
+	        };
+
+	        this.addPane = function(pane) {
+	          if (panes.length === 0) {
+	            $scope.select(pane);
+	          }
+	          panes.push(pane);
+	        };
+	      }],
+	      templateUrl: '../../templates/myNav.html'
+	    }
+	  })
+
+	  .directive('myPane', function() {
+	    return {
+	      require: '^^myTabs',
+	      restrict: 'E',
+	      transclude: true,
+	      scope: {
+	        title: '@'
+	      },
+	      link: function(scope, element, attrs, tabsCtrl) {
+	        tabsCtrl.addPane(scope);
+	      },
+	      templateUrl: '../../templates/myPane.html'
+	    }
+	  });
+
+
+/***/ },
+/* 5 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	const angular = __webpack_require__(1);
+
+	(function(){
+	  angular.module('ElementsApp', ['CustomHeader', 'NavBar'])
+	})()
+
+
+	// .controller('ShowController', function() {
+	//   this.show = false;
+	//   this.click = function() {
+	//     console.log('SHOW CONTROLLER CLICK FUNCTION HAS BEEN HIT');
+	//     this.show = false;
+	//   }
+	// })
+
+	// .directive('customNav', function() {
+	//   return {
+	//     restrict: 'E',
+	//     scope: {
+	//
+	//     },
+	//     templateUrl: './templates/navbar.html',
+	//     controller: function() {
+	//       var vm = this
+	//       vm.active = 'home'
+	//       vm.setActive = function(tab) {
+	//         console.log('SetActive function has been called');
+	//         vm.active = tab;
+	//       }
+	//     },
+	//     controllerAs: 'navbarCtrl'
+	//   },
+	//   link: function($scope, element, attrs) {
+	//     element.on('click', function() {
+	//       element.css('border', 'solid')
+	//     })
+	//   }
+	// })
+
+
+	// CUSTOM NAVE ELEMENT
+	// .directive('customNav', function() {
+	//   return {
+	//     restrict: 'E',
+	//     templateUrl: './templates/navbar.html'
+	//   }
+	// })
+	//
+	// // CUSTOM NAV ATTRIBUTE FUNCTIONALITY
+	// .directive('myActiveLink', function($location) {
+	//   return {
+	//     restrict: 'A',
+	//     scope: {
+	//       path: '@myActiveLink'
+	//     },
+	//     link: function(scope, element, attributes) {
+	//       scope.$on('$locationChangeSuccess', function() {
+	//         if ($location.path() === scope.path) {
+	//           element.addClass('active');
+	//         } else {
+	//           element.removeClass('active');
+	//         }
+	//       })
+	//     }
+	//   }
+	// })
+
+	// .directive('customHeader', function() {
+	//   return {
+	//     restrict: 'E',
+	//     scope: {
+	//
+	//     },
+	//     templateUrl: './templates/header.html'
+	//   };
+	// })
+	//
+	// // // SHOW ATTRIBUTE FOR CUSTOM HEADER
+	// // .directive('showHeader', function() {
+	// //   return {
+	// //     restrict: 'A'
+	// //   }
+	// // })
+	//
+	// .directive('modMessage', function() {
+	//   return {
+	//     restrict: 'E',
+	//     scope: {
+	//       name: '=',
+	//       says: '=',
+	//       points: '='
+	//     },
+	//     replace: true,
+	//     transclude: true,
+	//     templateUrl: './templates/messageMod.html',
+	//     controller: function($scope) {
+	//       $scope.addPoint = function() {
+	//         $scope.points += 1
+	//       }
+	//     }
+	//   }
+	// })
+
 
 /***/ }
 /******/ ]);

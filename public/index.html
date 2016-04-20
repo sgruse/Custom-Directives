@@ -6,21 +6,20 @@
   </head>
   <body>
 
-    <custom-nav></custom-nav>
-
-    <!-- <ul class="nav navbar-nav">
-      <li my-active-link="/home">
-        <a href="#/home"><i class="fa fa-dashboard"></i>Home</a>
-      </li>
-      <li my-active-link="/about">
-        <a href="#/about"><i class="fa fa-bar-chart-o"></i>About</a>
-      </li>
-    </ul> -->
-
     <main>
-      <custom-header></custom-header>
 
-      <mod-message name="'Luc'" says="'I wanna be a super star'" points="5"></mod-message>
+      <my-tabs>
+        <my-pane title="Hello">
+          <p>Lorem ipsum dolor sit amet</p>
+          <mod-message name="'Luc'" says="'I wanna be a super star'" points="5"></mod-message>
+        </my-pane>
+        <my-pane title="World">
+          <custom-header header="'From the other side'"></custom-header>
+          <em>Lorem Ipsum</em>
+          <p><a href ng-click="i = i + 1">counter: {{i || 0}}</a></p>
+        </my-pane>
+      </my-tabs>
+
     </main>
 
   <script src="./build/bundle.js"></script>
