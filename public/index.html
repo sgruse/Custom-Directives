@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html ng-app="ElementsApp">
+  <head>
+    <meta charset="utf-8">
+    <title>Custom Directives!!!</title>
+  </head>
+  <body>
+
+    <custom-nav></custom-nav>
+
+    <!-- <ul class="nav navbar-nav">
+      <li my-active-link="/home">
+        <a href="#/home"><i class="fa fa-dashboard"></i>Home</a>
+      </li>
+      <li my-active-link="/about">
+        <a href="#/about"><i class="fa fa-bar-chart-o"></i>About</a>
+      </li>
+    </ul> -->
+
+    <main ng-controller="ShowController as showCtrl">
+      <custom-header ng-show="showCtrl == false"></custom-header>
+
+      <mod-message name="'Luc'" says="'I wanna be a super star'" points="5"></mod-message>
+    </main>
+
+  <script src="./build/bundle.js"></script>
+
+  </body>
+</html>
