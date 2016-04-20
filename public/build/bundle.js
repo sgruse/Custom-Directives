@@ -49,10 +49,14 @@
 	const angular = __webpack_require__(1);
 
 	const app = angular.module('ElementsApp', [])
-
-	.controller('ShowController', function() {
-	  this.show = true;
-	})
+	// 
+	// .controller('ShowController', function() {
+	//   this.show = false;
+	//   this.click = function() {
+	//     console.log('SHOW CONTROLLER CLICK FUNCTION HAS BEEN HIT');
+	//     this.show = false;
+	//   }
+	// })
 
 	// .directive('customNav', function() {
 	//   return {
@@ -115,6 +119,13 @@
 	    templateUrl: './templates/header.html'
 	  };
 	})
+
+	// // SHOW ATTRIBUTE FOR CUSTOM HEADER
+	// .directive('showHeader', function() {
+	//   return {
+	//     restrict: 'A'
+	//   }
+	// })
 
 	.directive('modMessage', function() {
 	  return {
