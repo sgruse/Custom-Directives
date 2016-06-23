@@ -12,6 +12,7 @@ angular.module('NavBar', [])
         $scope.select = function(pane) {
           angular.forEach(panes, function(pane) {
             pane.selected = false;
+            console.log('GETTING THAT MONEY');
           });
           pane.selected = true;
         };
